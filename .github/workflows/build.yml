@@ -28,6 +28,22 @@ jobs:
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@v2
 
+      - name: Set ReShade version
+        shell: pwsh
+        run: |
+          @"
+          #pragma once
+
+          #define VERSION_FULL 6.7.3.2150
+          #define VERSION_MAJOR 6
+          #define VERSION_MINOR 7
+          #define VERSION_REVISION 3
+          #define VERSION_BUILD 2150
+
+          #define VERSION_STRING_FILE "6.7.3.2150"
+          #define VERSION_STRING_PRODUCT "6.7.3 UNOFFICIAL"
+          "@ | Out-File -FilePath res/version.h -Encoding ascii
+
       - name: Build ReShade (32-bit)
         run: |
           msbuild ReShade.sln /p:Configuration=Release /p:Platform=32-bit
